@@ -1,4 +1,4 @@
-package module
+package internal
 
 import (
 	_ "github.com/rwcoding/goback/internal/acl"
