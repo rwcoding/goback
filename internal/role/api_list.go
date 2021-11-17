@@ -38,8 +38,8 @@ func (request *listRequest) Run() *api.Response {
 	var us []models.Role
 	var c int64
 
-	db.Model(&models.Role{}).Order("id").Offset(offset).Limit(pageSize).Find(&us)
-	db.Model(&models.Role{}).Count(&c)
+	db().Model(&models.Role{}).Order("id").Offset(offset).Limit(pageSize).Find(&us)
+	db().Model(&models.Role{}).Count(&c)
 
 	list := []itemResponse{}
 	for _, v := range us {

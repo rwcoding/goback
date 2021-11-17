@@ -22,15 +22,15 @@ func NewApiGroupDelete(ctx *boot.Context) boot.Logic {
 
 func (request *groupDeleteRequest) Run() *api.Response {
 	var u models.PermissionGroup
-	if db.Take(&u, request.Id).Error != nil {
+	if db().Take(&u, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的分组")
 	}
-	if db.Delete(&u).Error != nil {
+	if db().Delete(&u).Error != nil {
 		return api.NewErrorResponse("删除失败")
 	}
 
 	//更新原有权限分组为0（未定义分组）
-	db.Model(&models.PermissionGroup{}).Where("gid=?", request.Id).Update("gid", 0)
+	db().Model(&models.PermissionGroup{}).Where("gid=?", request.Id).Update("gid", 0)
 
 	return api.NewMDResponse("删除成功", &groupDeleteResponse{
 		GroupNames: groupNames(),

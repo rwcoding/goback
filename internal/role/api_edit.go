@@ -21,13 +21,13 @@ func NewApiEdit(ctx *boot.Context) boot.Logic {
 func (request *editRequest) Run() *api.Response {
 
 	p := models.Role{}
-	if db.Take(&p, request.Id).Error != nil {
+	if db().Take(&p, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的角色")
 	}
 
 	p.Name = strings.TrimSpace(request.Name)
 
-	if db.Save(&p).RowsAffected == 0 {
+	if db().Save(&p).RowsAffected == 0 {
 		return api.NewErrorResponse("修改失败")
 	}
 	return api.NewMDResponse("修改成功", &addResponse{

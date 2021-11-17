@@ -48,8 +48,8 @@ func (request *listRequest) Run() *api.Response {
 	var us []models.Adminer
 	var c int64
 
-	tx1 := db.Model(&models.Adminer{}).Order("id").Offset(offset).Limit(pageSize)
-	tx2 := db.Model(&models.Adminer{})
+	tx1 := db().Model(&models.Adminer{}).Order("id").Offset(offset).Limit(pageSize)
+	tx2 := db().Model(&models.Adminer{})
 	if request.Username != "" {
 		tx1.Where("username=?", request.Username)
 		tx2.Where("username=?", request.Username)

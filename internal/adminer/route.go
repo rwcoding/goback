@@ -5,7 +5,7 @@ import (
 	"github.com/rwcoding/goback/models"
 )
 
-var db = models.GetDb()
+var db = models.GetDb
 
 func init() {
 	goback.Route("goback.adminer.list", NewApiList, "管理列表")

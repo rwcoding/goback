@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var db = models.GetDb()
+var db = models.GetDb
 
 func IsDefault(api string) bool {
 	return api[:12] == "goback.login"
@@ -20,7 +20,7 @@ func Verify(adminer *models.Adminer, api string) bool {
 	}
 	key := strings.ReplaceAll(adminer.Roles, ",", "-")
 	cache := models.Cache{}
-	db.Where("sign=?", "acl-"+key).Take(cache)
+	db().Where("sign=?", "acl-"+key).Take(cache)
 	if cache.Id == 0 {
 		cache.Data = GenerateByRoles(adminer.Roles)
 	}

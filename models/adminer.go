@@ -28,7 +28,7 @@ type Adminer struct {
 }
 
 func (u *Adminer) TableName() string {
-	return "gobui_adminer"
+	return "goback_adminer"
 }
 
 func (u *Adminer) IsOK() bool {

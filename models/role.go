@@ -11,5 +11,5 @@ type Role struct {
 }
 
 func (m *Role) TableName() string {
-	return "gobui_role"
+	return "goback_role"
 }

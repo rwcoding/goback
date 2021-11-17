@@ -26,7 +26,7 @@ func (request *addRequest) Run() *api.Response {
 		Name: strings.TrimSpace(request.Name),
 	}
 
-	if db.Create(&p).RowsAffected == 0 {
+	if db().Create(&p).RowsAffected == 0 {
 		return api.NewErrorResponse("添加失败")
 	}
 

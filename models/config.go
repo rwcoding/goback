@@ -10,5 +10,5 @@ type Config struct {
 }
 
 func (m *Config) TableName() string {
-	return "gobui_config"
+	return "goback_config"
 }

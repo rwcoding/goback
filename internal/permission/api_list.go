@@ -44,8 +44,8 @@ func (request *listRequest) Run() *api.Response {
 	var us []models.Permission
 	var c int64
 
-	tx1 := db.Model(&models.Permission{}).Order("id").Offset(offset).Limit(pageSize)
-	tx2 := db.Model(&models.Permission{})
+	tx1 := db().Model(&models.Permission{}).Order("id").Offset(offset).Limit(pageSize)
+	tx2 := db().Model(&models.Permission{})
 	if request.Permission != "" {
 		tx1.Where("permission LIKE ?", "%"+request.Permission+"%")
 		tx2.Where("permission LIKE ?", "%"+request.Permission+"%")
@@ -78,7 +78,7 @@ func groupNames() map[uint32]string {
 	ret := map[uint32]string{}
 	ret[0] = "未定义"
 	var data []models.PermissionGroup
-	if db.Find(&data).RowsAffected == 0 {
+	if db().Find(&data).RowsAffected == 0 {
 		return nil
 	}
 	for _, v := range data {

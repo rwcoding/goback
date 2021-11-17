@@ -49,8 +49,8 @@ func (request *listRequest) Run() *api.Response {
 	var data []models.Log
 	var c int64
 
-	tx1 := db.Model(&models.Log{}).Order("id desc").Offset(offset).Limit(pageSize)
-	tx2 := db.Model(&models.Log{})
+	tx1 := db().Model(&models.Log{}).Order("id desc").Offset(offset).Limit(pageSize)
+	tx2 := db().Model(&models.Log{})
 	if request.Type != 0 {
 		tx1.Where("type=?", request.Type)
 		tx2.Where("type=?", request.Type)

@@ -22,7 +22,7 @@ func (request *deleteRequest) Run() *api.Response {
 	ip := request.ctx.GetRemote()
 
 	var u models.Adminer
-	if db.Take(&u, request.Id).Error != nil {
+	if db().Take(&u, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的用户")
 	}
 	if u.Id == 1 {
@@ -32,7 +32,7 @@ func (request *deleteRequest) Run() *api.Response {
 		return api.NewErrorResponse("您无权操作该用户")
 	}
 
-	if db.Delete(&u).RowsAffected == 0 {
+	if db().Delete(&u).RowsAffected == 0 {
 		return api.NewErrorResponse("删除失败")
 	}
 	dblog.Add(&models.Log{

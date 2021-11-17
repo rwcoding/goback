@@ -24,14 +24,14 @@ func NewApiGroupEdit(ctx *boot.Context) boot.Logic {
 
 func (request *groupEditRequest) Run() *api.Response {
 	p := models.PermissionGroup{}
-	if db.Take(&p, request.Id).Error != nil {
+	if db().Take(&p, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的分组")
 	}
 
 	p.Name = request.Name
 	p.Ord = request.Ord
 
-	if db.Save(&p).Error != nil {
+	if db().Save(&p).Error != nil {
 		return api.NewErrorResponse("编辑失败")
 	}
 	return api.NewMDResponse("编辑成功", &groupEditResponse{

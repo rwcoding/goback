@@ -27,17 +27,17 @@ func NewApiBatchQuery(ctx *boot.Context) boot.Logic {
 
 func (request *batchQueryRequest) Run() *api.Response {
 	var groups []group
-	db.Model(&models.PermissionGroup{}).Order("ord").Find(&groups)
+	db().Model(&models.PermissionGroup{}).Order("ord").Find(&groups)
 	groups = append(groups, group{
 		Id:   0,
 		Name: "未定义",
 	})
 
 	var permissions []permission
-	db.Model(&models.Permission{}).Find(&permissions)
+	db().Model(&models.Permission{}).Find(&permissions)
 
 	var roles []role
-	db.Model(&models.Role{}).Find(&roles)
+	db().Model(&models.Role{}).Find(&roles)
 
 	return api.NewDataResponse(&batchQueryResponse{
 		Roles:       roles,

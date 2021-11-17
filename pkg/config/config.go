@@ -30,5 +30,5 @@ func NeedWriteHeader() bool {
 }
 
 func OnlyGetPost() bool {
-	return false
+	return CC.OnlyGP
 }

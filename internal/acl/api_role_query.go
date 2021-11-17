@@ -42,22 +42,22 @@ func NewApiRoleQuery(ctx *boot.Context) boot.Logic {
 
 func (request *roleQueryRequest) Run() *api.Response {
 	var role models.Role
-	if db.Take(&role, request.RoleId).Error != nil {
+	if db().Take(&role, request.RoleId).Error != nil {
 		return api.NewErrorResponse("无效的角色")
 	}
 
 	var groups []group
-	db.Model(&models.PermissionGroup{}).Order("ord").Find(&groups)
+	db().Model(&models.PermissionGroup{}).Order("ord").Find(&groups)
 	groups = append(groups, group{
 		Id:   0,
 		Name: "未定义",
 	})
 
 	var permissions []permission
-	db.Model(&models.Permission{}).Find(&permissions)
+	db().Model(&models.Permission{}).Find(&permissions)
 
 	var hp []havePermission
-	db.Model(&models.RolePermission{}).Select("permission").Where("role_id=?", request.RoleId).Find(&hp)
+	db().Model(&models.RolePermission{}).Select("permission").Where("role_id=?", request.RoleId).Find(&hp)
 
 	return api.NewDataResponse(&roleQueryResponse{
 		RoleName:        role.Name,

@@ -35,7 +35,7 @@ func (request *editRequest) Run() *api.Response {
 	ip := request.ctx.GetRemote()
 
 	var u models.Adminer
-	if db.Take(&u, request.Id).Error != nil {
+	if db().Take(&u, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的用户")
 	}
 	if adminer.Id != 1 && u.Id == 1 {
@@ -86,7 +86,7 @@ func (request *editRequest) Run() *api.Response {
 		changePassword = true
 	}
 
-	err := db.Save(u).Error
+	err := db().Save(u).Error
 
 	if err != nil {
 		logger.Error(err.Error())

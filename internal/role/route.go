@@ -5,7 +5,7 @@ import (
 	"github.com/rwcoding/goback/models"
 )
 
-var db = models.GetDb()
+var db = models.GetDb
 
 func init() {
 	goback.Route("goback.role.list", NewApiList, "角色列表")

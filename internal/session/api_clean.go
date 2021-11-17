@@ -18,11 +18,11 @@ func NewApiClean(ctx *boot.Context) boot.Logic {
 
 func (request *cleanRequest) Run() *api.Response {
 	if request.Type == 0 {
-		db.Delete(models.Session{})
+		db().Delete(models.Session{})
 	} else if request.Type == models.SessionTypeAuth {
-		db.Where("type=?", models.SessionTypeAuth).Delete(models.Session{})
+		db().Where("type=?", models.SessionTypeAuth).Delete(models.Session{})
 	} else if request.Type == models.SessionTypeCaptcha {
-		db.Where("type=?", models.SessionTypeCaptcha).Delete(models.Session{})
+		db().Where("type=?", models.SessionTypeCaptcha).Delete(models.Session{})
 	}
 
 	return api.NewSuccessResponse("清理成功")

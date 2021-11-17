@@ -10,7 +10,7 @@ import (
 // 修改角色关联权限后使用该方法更新
 func Generate(roleId uint32) {
 	var users []models.Adminer
-	if db.Where("FIND_IN_SET("+strconv.Itoa(int(roleId))+", roles)").
+	if db().Where("FIND_IN_SET("+strconv.Itoa(int(roleId))+", roles)").
 		Find(&users).RowsAffected == 0 {
 		return
 	}
@@ -38,7 +38,7 @@ func GenerateByRoles(roles string) string {
 	}
 	arr := strings.Split(roles, ",")
 	var permissions []struct{ Permission string }
-	db.Model(&models.RolePermission{}).
+	db().Model(&models.RolePermission{}).
 		Where("role_id IN ?", arr).
 		Select("permission").Find(&permissions)
 
@@ -59,21 +59,21 @@ func GenerateByRoles(roles string) string {
 
 	//存入数据库
 	cache := &models.Cache{}
-	db.Where("sign=?", key).First(cache)
+	db().Where("sign=?", key).First(cache)
 	if cache.Id > 0 {
 		cache.Data = sb.String()
-		db.Save(cache)
+		db().Save(cache)
 	} else {
 		cache.Sign = key
 		cache.Data = sb.String()
-		db.Create(cache)
+		db().Create(cache)
 	}
 	return sb.String()
 }
 
 func PrefabInit() {
 	var us []struct{ Roles string }
-	db.Model(&models.Adminer{}).Select("roles").Unscoped().Group("roles").Find(&us)
+	db().Model(&models.Adminer{}).Select("roles").Unscoped().Group("roles").Find(&us)
 	if len(us) > 0 {
 		for _, v := range us {
 			GenerateByRoles(v.Roles)

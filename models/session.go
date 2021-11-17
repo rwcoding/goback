@@ -17,5 +17,5 @@ type Session struct {
 }
 
 func (u *Session) TableName() string {
-	return "gobui_session"
+	return "goback_session"
 }

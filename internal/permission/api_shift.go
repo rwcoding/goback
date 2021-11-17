@@ -19,13 +19,13 @@ func NewApiShift(ctx *boot.Context) boot.Logic {
 }
 
 func (request *shiftRequest) Run() *api.Response {
-	if request.Gid > 0 && db.Take(&models.PermissionGroup{}, request.Gid).Error != nil {
+	if request.Gid > 0 && db().Take(&models.PermissionGroup{}, request.Gid).Error != nil {
 		return api.NewErrorResponse("无效的分组")
 	}
 
 	var ps []models.Permission
 
-	if db.Model(&models.Permission{}).Where("permission LIKE ?", "%"+request.Kw+"%").Find(&ps).RowsAffected == 0 {
+	if db().Model(&models.Permission{}).Where("permission LIKE ?", "%"+request.Kw+"%").Find(&ps).RowsAffected == 0 {
 		return api.NewErrorResponse("没有对应的权限")
 	}
 
@@ -33,6 +33,6 @@ func (request *shiftRequest) Run() *api.Response {
 	for _, v := range ps {
 		ids = append(ids, v.Id)
 	}
-	rows := db.Model(&models.Permission{}).Where("id IN ?", ids).Update("gid", request.Gid).RowsAffected
+	rows := db().Model(&models.Permission{}).Where("id IN ?", ids).Update("gid", request.Gid).RowsAffected
 	return api.NewSuccessResponse("转移了 " + strconv.Itoa(int(rows)) + " 条数据")
 }

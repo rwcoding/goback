@@ -28,7 +28,7 @@ func NewApiEdit(ctx *boot.Context) boot.Logic {
 func (request *editRequest) Run() *api.Response {
 
 	p := models.Permission{}
-	if db.Take(&p, request.Id).Error != nil {
+	if db().Take(&p, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的权限")
 	}
 
@@ -58,7 +58,7 @@ func (request *editRequest) Run() *api.Response {
 	p.Gid = request.Gid
 	p.Type = request.Type
 
-	if db.Save(&p).RowsAffected == 0 {
+	if db().Save(&p).RowsAffected == 0 {
 		return api.NewErrorResponse("修改失败")
 	}
 	return api.NewMDResponse("修改成功", &editResponse{

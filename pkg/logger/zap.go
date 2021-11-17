@@ -18,8 +18,9 @@ var sugar *zap.SugaredLogger
 
 func newConfig() zap.Config {
 	outputPaths := []string{"stderr"}
-	if config.IsDev() {
-		outputPaths = []string{"my://"}
+	if len(config.Log()) > 1 {
+		//outputPaths = []string{"my://"}
+		outputPaths = append(outputPaths, "my://")
 	}
 	return zap.Config{
 		Level:       zap.NewAtomicLevelAt(zap.InfoLevel),

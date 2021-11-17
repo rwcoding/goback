@@ -16,7 +16,7 @@ func NewApiInit(ctx *boot.Context) boot.Logic {
 
 func (request *initRequest) Run() *api.Response {
 	var p []models.Permission
-	if db.Where("type=?", models.PermissionTypeApi).Find(&p).Error != nil {
+	if db().Where("type=?", models.PermissionTypeApi).Find(&p).Error != nil {
 		return api.NewErrorResponse("无效的权限")
 	}
 
@@ -38,7 +38,7 @@ func (request *initRequest) Run() *api.Response {
 	}
 
 	if len(add) > 0 {
-		db.Create(&add)
+		db().Create(&add)
 	}
 
 	var del []uint32
@@ -55,7 +55,7 @@ func (request *initRequest) Run() *api.Response {
 	}
 
 	if len(del) > 0 {
-		db.Where("id IN ?", del).Delete(&models.Permission{})
+		db().Where("id IN ?", del).Delete(&models.Permission{})
 	}
 
 	return api.NewSuccessResponse("已初始化api权限列表")

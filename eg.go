@@ -5,6 +5,7 @@ import (
 	"github.com/rwcoding/goback/models"
 	"github.com/rwcoding/goback/pkg/boot"
 	"github.com/rwcoding/goback/pkg/config"
+	"github.com/rwcoding/goback/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -31,6 +32,7 @@ func SetOnlyGP(is bool) {
 // SetLogFile 日志文件，如 /log/back.log
 func SetLogFile(log string) {
 	config.CC.Log = log
+	logger.InitDefaultLogger()
 }
 
 // SetLang 语言，验证器会载入语言包，默认zh

@@ -31,7 +31,7 @@ func NewApiInfo(ctx *boot.Context) boot.Logic {
 
 func (request *infoRequest) Run() *api.Response {
 	var user models.Adminer
-	if db.Take(&user, request.Id).Error != nil {
+	if db().Take(&user, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的用户")
 	}
 	return api.NewDataResponse(&infoResponse{

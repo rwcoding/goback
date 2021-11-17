@@ -44,8 +44,8 @@ func (request *listRequest) Run() *api.Response {
 	var data []models.Session
 	var c int64
 
-	tx1 := db.Model(&models.Session{}).Order("id").Offset(offset).Limit(pageSize)
-	tx2 := db.Model(&models.Session{})
+	tx1 := db().Model(&models.Session{}).Order("id").Offset(offset).Limit(pageSize)
+	tx2 := db().Model(&models.Session{})
 	if request.AdminerId > 0 {
 		tx1.Where("adminer_id=?", request.AdminerId)
 		tx2.Where("adminer_id=?", request.AdminerId)

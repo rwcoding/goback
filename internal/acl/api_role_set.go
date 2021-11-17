@@ -21,7 +21,7 @@ func NewApiRoleSet(ctx *boot.Context) boot.Logic {
 }
 
 func (request *roleSetRequest) Run() *api.Response {
-	if db.Take(&models.Role{}, request.RoleId).Error != nil {
+	if db().Take(&models.Role{}, request.RoleId).Error != nil {
 		return api.NewErrorResponse("无效的角色")
 	}
 
@@ -37,7 +37,7 @@ func (request *roleSetRequest) Run() *api.Response {
 			ids = append(ids, uint32(id))
 		}
 		var pList []models.Permission
-		if db.Where("id IN ?", ids).Find(&pList).RowsAffected > 0 {
+		if db().Where("id IN ?", ids).Find(&pList).RowsAffected > 0 {
 			for _, v := range pList {
 				permissions = append(permissions, models.RolePermission{
 					Permission: v.Permission,
@@ -47,9 +47,9 @@ func (request *roleSetRequest) Run() *api.Response {
 		}
 	}
 
-	db.Where("role_id=?", request.RoleId).Delete(&models.RolePermission{})
+	db().Where("role_id=?", request.RoleId).Delete(&models.RolePermission{})
 	if len(permissions) > 0 {
-		db.Create(&permissions)
+		db().Create(&permissions)
 	}
 	acl.Generate(request.RoleId)
 

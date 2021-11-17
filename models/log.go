@@ -21,7 +21,7 @@ type Log struct {
 }
 
 func (m *Log) TableName() string {
-	return "gobui_log"
+	return "goback_log"
 }
 
 func LogTypeNames() map[int]string {

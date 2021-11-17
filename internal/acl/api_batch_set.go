@@ -36,7 +36,7 @@ func (request *batchSetRequest) Run() *api.Response {
 	}
 	var permissions []string
 	var pList []models.Permission
-	if db.Where("id IN ?", ids).Find(&pList).RowsAffected > 0 {
+	if db().Where("id IN ?", ids).Find(&pList).RowsAffected > 0 {
 		for _, v := range pList {
 			permissions = append(permissions, v.Permission)
 		}
@@ -50,13 +50,13 @@ func (request *batchSetRequest) Run() *api.Response {
 		if err != nil {
 			continue
 		}
-		if db.Take(&models.Role{}, roleId).Error != nil {
+		if db().Take(&models.Role{}, roleId).Error != nil {
 			return api.NewErrorResponse("无效的角色" + v)
 		}
 		if isAdd {
 			var addList []models.RolePermission
 			var rps []models.RolePermission
-			db.Where("role_id=?", roleId).Find(&rps)
+			db().Where("role_id=?", roleId).Find(&rps)
 			for _, vv := range pList {
 				exists := false
 				for _, vvv := range rps {
@@ -73,10 +73,10 @@ func (request *batchSetRequest) Run() *api.Response {
 			}
 			fmt.Println(addList)
 			if len(addList) > 0 {
-				db.Create(&addList)
+				db().Create(&addList)
 			}
 		} else {
-			db.Where("role_id=?", roleId).Where("permission IN ?", permissions).
+			db().Where("role_id=?", roleId).Where("permission IN ?", permissions).
 				Delete(&models.RolePermission{})
 		}
 

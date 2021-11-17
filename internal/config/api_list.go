@@ -40,8 +40,8 @@ func (request *listRequest) Run() *api.Response {
 	var us []models.Config
 	var c int64
 
-	db.Order("id desc").Offset(offset).Limit(pageSize).Find(&us)
-	db.Model(&models.Config{}).Count(&c)
+	db().Order("id desc").Offset(offset).Limit(pageSize).Find(&us)
+	db().Model(&models.Config{}).Count(&c)
 
 	var list []itemResponse
 	for _, v := range us {

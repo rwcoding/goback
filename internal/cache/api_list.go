@@ -42,8 +42,8 @@ func (request *listRequest) Run() *api.Response {
 	var data []models.Cache
 	var c int64
 
-	tx1 := db.Model(&models.Cache{}).Order("id desc").Offset(offset).Limit(pageSize)
-	tx2 := db.Model(&models.Cache{})
+	tx1 := db().Model(&models.Cache{}).Order("id desc").Offset(offset).Limit(pageSize)
+	tx2 := db().Model(&models.Cache{})
 	if request.Sign != "" {
 		tx1.Where("sign=?", request.Sign)
 		tx2.Where("sign=?", request.Sign)

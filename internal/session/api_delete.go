@@ -18,9 +18,9 @@ func NewApiDelete(ctx *boot.Context) boot.Logic {
 
 func (request *deleteRequest) Run() *api.Response {
 	session := models.Session{}
-	if db.Take(&session, request.Id).Error != nil {
+	if db().Take(&session, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的会话")
 	}
-	db.Delete(session)
+	db().Delete(session)
 	return api.NewSuccessResponse("删除成功")
 }

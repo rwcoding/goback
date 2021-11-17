@@ -9,7 +9,7 @@ type RolePermission struct {
 }
 
 func (m *RolePermission) TableName() string {
-	return "gobui_role_permission"
+	return "goback_role_permission"
 }
 
 //func (m *RolePermission) AfterSave(tx *gorm.DB) (err error) {

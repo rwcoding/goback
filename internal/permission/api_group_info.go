@@ -24,7 +24,7 @@ func NewApiGroupInfo(ctx *boot.Context) boot.Logic {
 
 func (request *groupInfoRequest) Run() *api.Response {
 	var p models.PermissionGroup
-	if db.Take(&p, request.Id).Error != nil {
+	if db().Take(&p, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的分组")
 	}
 	return api.NewDataResponse(&groupInfoResponse{

@@ -53,7 +53,7 @@ func (request *addRequest) Run() *api.Response {
 		Gid:        request.Gid,
 	}
 
-	if db.Create(&p).RowsAffected == 0 {
+	if db().Create(&p).RowsAffected == 0 {
 		return api.NewErrorResponse("添加失败")
 	}
 
@@ -63,7 +63,7 @@ func (request *addRequest) Run() *api.Response {
 }
 
 func verifyGid(gid uint32) bool {
-	return db.Take(&models.PermissionGroup{}, gid).RowsAffected > 0
+	return db().Take(&models.PermissionGroup{}, gid).RowsAffected > 0
 }
 
 func VerifyType(typ uint8) bool {

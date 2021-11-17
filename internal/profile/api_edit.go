@@ -28,7 +28,7 @@ func (request *editRequest) Run() *api.Response {
 		"phone": adminer.Phone,
 	})
 
-	if db.Model(adminer).Updates(models.Adminer{
+	if db().Model(adminer).Updates(models.Adminer{
 		Name:  strings.TrimSpace(request.Name),
 		Phone: strings.TrimSpace(request.Phone),
 	}).Error != nil {

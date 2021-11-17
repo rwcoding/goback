@@ -10,5 +10,5 @@ type Cache struct {
 }
 
 func (m *Cache) TableName() string {
-	return "gobui_cache"
+	return "goback_cache"
 }

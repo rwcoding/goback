@@ -7,16 +7,16 @@ import (
 	"time"
 )
 
-var db = models.GetDb()
+var db = models.GetDb
 
 func NewKVSession(v string, sessionId string) *models.Session {
 	if sessionId != "" {
 		var session models.Session
-		db.Where("session_id=?", sessionId).Take(&session)
+		db().Where("session_id=?", sessionId).Take(&session)
 		if session.Id > 0 {
 			session.SessionValue = v
 			session.Expire = uint32(time.Now().Unix()) + 1800
-			db.Save(&session)
+			db().Save(&session)
 			return &session
 		}
 	}
@@ -28,7 +28,7 @@ func NewKVSession(v string, sessionId string) *models.Session {
 		SessionValue: v,
 		Expire:       uint32(time.Now().Unix()) + 1800,
 	}
-	if db.Create(s).Error != nil {
+	if db().Create(s).Error != nil {
 		return nil
 	}
 	return s
@@ -44,7 +44,7 @@ func NewAuthSession(adminerId uint32) *models.Session {
 		SessionValue: sessionValue,
 		Expire:       uint32(time.Now().Unix()) + 86400*30,
 	}
-	if db.Create(s).Error != nil {
+	if db().Create(s).Error != nil {
 		return nil
 	}
 	return s
@@ -52,7 +52,7 @@ func NewAuthSession(adminerId uint32) *models.Session {
 
 func VerifySession(sessionId, v string) bool {
 	s := &models.Session{}
-	db.Where("session_id=?", sessionId).Take(s)
+	db().Where("session_id=?", sessionId).Take(s)
 	if s.Id == 0 {
 		return false
 	}
@@ -61,7 +61,7 @@ func VerifySession(sessionId, v string) bool {
 
 func QuerySession(sessionId string) *models.Session {
 	s := &models.Session{}
-	if db.Where("session_id=?", sessionId).Take(s).Error != nil {
+	if db().Where("session_id=?", sessionId).Take(s).Error != nil {
 		return nil
 	}
 	return s

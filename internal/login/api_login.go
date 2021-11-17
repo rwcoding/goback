@@ -37,7 +37,7 @@ func (request *loginRequest) Run() *api.Response {
 	}
 
 	adminer := &models.Adminer{}
-	if db.Where("username=?", request.Username).Take(adminer).Error != nil {
+	if db().Where("username=?", request.Username).Take(adminer).Error != nil {
 		return api.NewErrorResponse("无效的账号或密码")
 	}
 
@@ -49,7 +49,7 @@ func (request *loginRequest) Run() *api.Response {
 		return api.NewErrorResponse("账号已经锁定,请联系管理员")
 	}
 
-	db.Where("adminer_id", adminer.Id).Delete(models.Session{})
+	db().Where("adminer_id", adminer.Id).Delete(models.Session{})
 
 	sess := session.NewAuthSession(adminer.Id)
 	if sess == nil {

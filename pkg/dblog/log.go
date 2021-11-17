@@ -5,10 +5,10 @@ import (
 	"github.com/rwcoding/goback/models"
 )
 
-var db = models.GetDb()
+var db = models.GetDb
 
 func Add(log *models.Log) {
-	db.Model(log).Create(log)
+	db().Model(log).Create(log)
 }
 
 func NewONData() *oldNewData {

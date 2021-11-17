@@ -84,7 +84,7 @@ func (request *addRequest) Run() *api.Response {
 		Status:   request.Status,
 		IsSuper:  request.IsSuper,
 	}
-	ret := db.Create(&newUser)
+	ret := db().Create(&newUser)
 	if ret.Error == nil {
 		dblog.Add(&models.Log{
 			AdminerId: adminer.Id,

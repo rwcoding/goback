@@ -28,7 +28,7 @@ func NewApiInfo(ctx *boot.Context) boot.Logic {
 
 func (request *infoRequest) Run() *api.Response {
 	log := models.Log{}
-	if db.Take(&log, request.Id).Error != nil {
+	if db().Take(&log, request.Id).Error != nil {
 		return api.NewErrorResponse("无效的日志")
 	}
 

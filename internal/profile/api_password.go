@@ -39,7 +39,7 @@ func (request *passwordRequest) Run() *api.Response {
 	salt := util.RandString(32)
 	pwd := util.Password(newPwd, salt, false)
 
-	ret := db.Model(adminer).Updates(&models.Adminer{
+	ret := db().Model(adminer).Updates(&models.Adminer{
 		Salt:     salt,
 		Password: pwd,
 	})

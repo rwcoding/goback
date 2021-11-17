@@ -18,7 +18,7 @@ func GetRoleMap() map[uint32]string {
 func GenerateRoleMap() map[uint32]string {
 	ret := map[uint32]string{}
 	var roles []models.Role
-	db.Find(&roles)
+	db().Find(&roles)
 	if len(roles) == 0 {
 		return nil
 	}

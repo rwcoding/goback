@@ -39,9 +39,9 @@ func (request *groupListRequest) Run() *api.Response {
 	var us []models.PermissionGroup
 	var c int64
 
-	db.Model(&models.PermissionGroup{}).
+	db().Model(&models.PermissionGroup{}).
 		Order("ord").Offset(offset).Limit(pageSize).Find(&us)
-	db.Model(&models.PermissionGroup{}).Count(&c)
+	db().Model(&models.PermissionGroup{}).Count(&c)
 
 	list := []groupItemResponse{}
 	for _, v := range us {

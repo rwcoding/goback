@@ -15,7 +15,7 @@ func NewApiLogout(ctx *boot.Context) boot.Logic {
 }
 
 func (request logoutRequest) Run() *api.Response {
-	db.Where("sess=?", request.ctx.GetSession()).Delete(&models.Session{})
+	db().Where("sess=?", request.ctx.GetSession()).Delete(&models.Session{})
 	// 是否要主要所有该用户相关的session
 	return api.NewSuccessResponse("注销成功，请重新登录")
 }

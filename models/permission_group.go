@@ -10,5 +10,5 @@ type PermissionGroup struct {
 }
 
 func (m *PermissionGroup) TableName() string {
-	return "gobui_permission_group"
+	return "goback_permission_group"
 }
