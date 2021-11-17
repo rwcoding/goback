@@ -5,7 +5,8 @@
 + **Header** 中增加 `Go-Time` 字段，请求时间
 + **Header** 中增加 `Go-Token` 字段，登陆凭证，没有为空字符串
 + **Header** 中增加 `Go-Sign` 字段，数据签名，签名方式见下
-+ 请求参数
++ **如果配置仅支持GET、POST请求，以上参数放在URL Query中**
++ 请求参数  
 ```
 {
    "api": "string", //接口路径
@@ -20,7 +21,7 @@ Go-Sign: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Go-Api: login
 Go-Time: 1456787654
 
-{"path":"login","data":{"uername":"lucy","password":"123"}}
+{"uername":"lucy","password":"123"}
 ```
 
 + 签名方式

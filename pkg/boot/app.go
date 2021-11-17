@@ -61,11 +61,11 @@ func (app *Application) RunGinCtx(g *gin.Context) {
 		g.Header("Access-Control-Allow-Headers", "Content-Type,Go-Session,Go-Time,Go-Sign,Go-Api")
 		g.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		g.Header("Access-Control-Max-Age", "86400")
+	}
 
-		if g.Request.Method == "OPTIONS" {
-			g.AbortWithStatus(http.StatusNoContent)
-			return
-		}
+	if g.Request.Method == "OPTIONS" {
+		g.AbortWithStatus(http.StatusNoContent)
+		return
 	}
 
 	cmd := GetParamFromCtx(g, "Go-Api")
